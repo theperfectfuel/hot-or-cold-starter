@@ -1,4 +1,3 @@
-
 $(document).ready(function(){
 
 
@@ -65,6 +64,15 @@ $(document).ready(function(){
   		console.log(secretNumber);
   	}
 
+    /*--- Make sure input is a positive number ---*/
+    function validateGuess(thisGuess) {
+      if ((thisGuess > 0 && thisGuess <= 100) && $.isNumeric(thisGuess)) {
+        return true;
+      } else {
+        return false;
+      }
+    }
+
   	/*--- Check the user's guess after guess button is clicked ---*/
   	function checkGuess(userGuess){
   		var guessDistance = Math.abs(secretNumber - userGuess);
@@ -110,12 +118,18 @@ $(document).ready(function(){
   	$("#guessButton").click(function(event) {
   		event.preventDefault();
   		thisGuess = $("#userGuess").val();
-  		checkGuess(thisGuess);
-  		updateGuessList(thisGuess);
-  		counterUp();
-  		clearGuess();
-  	});
 
+      if (validateGuess(thisGuess)) {
+        checkGuess(thisGuess);
+        updateGuessList(thisGuess);
+        counterUp();
+        clearGuess();
+      } else {
+        clearGuess();
+        $("#feedback").html("That ain't valid and you know it.")
+      }
+  		
+  	});
 
 
 });
